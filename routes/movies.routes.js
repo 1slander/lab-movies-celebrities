@@ -1,14 +1,33 @@
 // starter code in both routes/celebrities.routes.js and routes/movies.routes.js
 const router = require("express").Router();
 const MovieModel = require("../models/Movie.model");
+const CelebrityModel = require("../models/Celebrity.model");
 
 // all your routes here
 
-router.get("/movies/create", (req, res) => {
-  res.render();
+router.get("/create", async (req, res) => {
+  try {
+    const celebsList = await CelebrityModel.find();
+    console.log("This are the list of celebrities for movies:", celebsList);
+    res.render("movies/new-movie.hbs", { celebsList });
+  } catch (err) {
+    console.log(err);
+  }
 });
-router.post("/movies/create", (req, res) => {
-  res.render();
+router.post("/create", async (req, res) => {
+  try {
+    const newMovie = await MovieModel.create(req.body);
+    console.log("New movie added:", newMovie);
+    res.redirect("/movies");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/", async (req, res) => {
+  const allMovies = await MovieModel.find();
+  console.log("Movies list:", allMovies);
+  res.render("movies/movies.hbs", { allMovies });
 });
 
 module.exports = router;
