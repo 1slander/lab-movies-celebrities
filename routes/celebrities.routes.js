@@ -27,4 +27,56 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:celebId", async (req, res) => {
+  try {
+    const { celebId } = req.params;
+    const findCeleb = await CelebrityModel.findById(celebId);
+    console.log(findCeleb);
+    res.render("celebrities/celebrity-details.hbs", { findCeleb });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//Deleting
+router.post("/:celebId/delete", async (req, res) => {
+  try {
+    const { celebId } = req.params;
+    const deleteCeleb = await CelebrityModel.findByIdAndDelete(celebId);
+    console.log("The deleted celebrity is:", deleteCeleb);
+    res.redirect("/celebrities");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//Update
+
+router.get("/:celebId/edit", async (req, res) => {
+  try {
+    const { celebId } = req.params;
+    const editCeleb = await CelebrityModel.findById(celebId);
+
+    res.render("celebrities/edit-celebrity.hbs", {
+      editCeleb,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/:celebId/edit", async (req, res) => {
+  try {
+    const { celebId } = req.params;
+    const newCelebInfo = req.body;
+    const updateCeleb = await CelebrityModel.findByIdAndUpdate(
+      celebId,
+      newCelebInfo
+    );
+    res.redirect("/celebrities");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 module.exports = router;

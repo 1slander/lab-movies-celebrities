@@ -1,0 +1,9 @@
+<h2>{{findCeleb.name}}</h2>
+<h5>{{findCeleb.occupation}}</h5>
+<hr />
+<p>{{findCeleb.catchPhrase}}</p>
+<hr />
+<form action="/celebrities/{{findCeleb._id}}/delete" method="post">
+  <button type="submit">Delete</button>
+</form>
+<a href="/celebrities/{{findCeleb._id}}/edit">Edit Celebrity</a>
