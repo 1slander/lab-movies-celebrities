@@ -47,7 +47,38 @@ router.post("/:movieId/delete", async (req, res) => {
   try {
     const { movieId } = req.params;
     const deleteMovie = await MovieModel.findByIdAndDelete(movieId);
-    console.log("The deleted movis is:", deleteMovie);
+    console.log("The deleted movies is:", deleteMovie);
+    res.redirect("/movies");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//Update
+
+router.get("/:movieId/edit", async (req, res) => {
+  try {
+    const { movieId } = req.params;
+    const editMovie = await MovieModel.findById(movieId);
+    const allCelebrities = await CelebrityModel.find().populate();
+    console.log(editMovie, allCelebrities);
+    res.render("movies/edit-movie", {
+      editMovie,
+      allCelebrities,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/:movieId/edit", async (req, res) => {
+  try {
+    const { movieId } = req.params;
+    const newMovieInfo = req.body;
+    const updateMovie = await MovieModel.findByIdAndUpdate(
+      movieId,
+      newMovieInfo
+    );
     res.redirect("/movies");
   } catch (err) {
     console.log(err);

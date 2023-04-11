@@ -4,7 +4,7 @@
   <input type="text" name="title" id="title" placeholder="title" />
   <input type="text" name="genre" id="genre" placeholder="genre" />
   <input type="text" name="plot" id="plot" placeholder="plot" />
-  <select name="cast" id="">
+  <select name="cast" id="" multiple>
     {{#each celebsList}}
       <option value="{{this._id}}">{{this.name}}</option>
     {{/each}}
