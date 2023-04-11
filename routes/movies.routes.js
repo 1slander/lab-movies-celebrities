@@ -23,19 +23,32 @@ router.post("/create", async (req, res) => {
     console.log(err);
   }
 });
-
+//Display Movies
 router.get("/", async (req, res) => {
   const allMovies = await MovieModel.find();
   console.log("Movies list:", allMovies);
   res.render("movies/movies.hbs", { allMovies });
 });
 
+//Display Movie info + Cast
 router.get("/:movieId", async (req, res) => {
   try {
     const { movieId } = req.params;
     const findMovie = await MovieModel.findById(movieId).populate("cast");
     console.log(findMovie);
     res.render("movies/movie-details.hbs", { findMovie });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//Deleting
+router.post("/:movieId/delete", async (req, res) => {
+  try {
+    const { movieId } = req.params;
+    const deleteMovie = await MovieModel.findByIdAndDelete(movieId);
+    console.log("The deleted movis is:", deleteMovie);
+    res.redirect("/movies");
   } catch (err) {
     console.log(err);
   }

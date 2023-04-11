@@ -13,3 +13,6 @@
   </p>
   <p>{{catchPhrase}}</p>
 {{/each}}
+<form action="/movies/{{findMovie._id}}/delete" method="post">
+  <button type="submit">Delete</button>
+</form>
