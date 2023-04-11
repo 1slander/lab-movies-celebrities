@@ -1,6 +1,7 @@
 <h2>List of Movies</h2>
 
 {{#each allMovies}}
-  {{title}}
+  <a href="/movies/{{this._id}}">{{title}}</a>
+
   <br />
 {{/each}}
